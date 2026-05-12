@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GrampanchayatSystem</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+
+@{
+    var isHomePage =
+        string.Equals(ViewContext.RouteData.Values["controller"]?.ToString(), "Home", StringComparison.OrdinalIgnoreCase) &&
+        string.Equals(ViewContext.RouteData.Values["action"]?.ToString(), "Index", StringComparison.OrdinalIgnoreCase);
+}
+
+<body class="d-flex flex-column min-vh-100 @(isHomePage ? "home-page" : "")">
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary shadow @(isHomePage ? "mb-0" : "mb-3")">
+        <div class="container-fluid">
+
+            <a class="navbar-brand fw-bold" asp-controller="Home" asp-action="Index">
+                🏛 Gram Panchayat
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                <!-- LEFT MENU -->
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                       <a class="nav-link text-white" asp-controller="Home" asp-action="History">History</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/Citizen">Citizens</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/Citizen/Create">Add Citizen</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Certificate" asp-action="Index">Certificates</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Tax" asp-action="Index">Tax</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Home" asp-action="Gallery">Gallery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                    </li>
+                </ul>
+
+                <!-- RIGHT MENU -->
+                <ul class="navbar-nav">
+
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item">
+                            <span class="nav-link text-white">
+                                👤 @User.Identity.Name
+                            </span>
+                        </li>
+
+                        <li class="nav-item">
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="btn btn-sm btn-danger ms-2">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-sm btn-light me-2" asp-controller="Account" asp-action="Login">
+                                Login
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="btn btn-sm btn-warning" asp-controller="Account" asp-action="Register">
+                                Register
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+@if (isHomePage)
+{
+    <main class="flex-grow-1">
+        @RenderBody()
+    </main>
+}
+else
+{
+    <div class="container flex-grow-1">
+        <main class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+}
+
+<footer class="border-top text-center text-muted py-3 mt-auto">
+    © 2026 - Gram Panchayat System
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

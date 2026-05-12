@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h2 class="text-center text-primary mb-5">
+    📊 Gram Panchayat Dashboard
+</h2>
+
+<div class="row">
+
+    <!-- TOTAL CITIZENS -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-lg border-0 text-center p-4 bg-primary text-white rounded-4">
+            <h3>👨‍👩‍👧 Total Citizens</h3>
+            <h1 class="display-4 fw-bold">@ViewBag.TotalCitizens</h1>
+        </div>
+    </div>
+
+    <!-- TOTAL USERS -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-lg border-0 text-center p-4 bg-success text-white rounded-4">
+            <h3>🔐 Total Logins</h3>
+            <h1 class="display-4 fw-bold">@ViewBag.TotalUsers</h1>
+        </div>
+    </div>
+
+</div>
