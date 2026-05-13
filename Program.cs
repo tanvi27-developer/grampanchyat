@@ -52,6 +52,7 @@ using (var scope = app.Services.CreateScope())
     await dbContext.Database.MigrateAsync();
     await SeedRolesAndAdminAsync(roleManager, userManager);
 }
+app.Urls.Add("http://0.0.0.0:8080");
 
 app.Run();
 
